@@ -1,0 +1,205 @@
+@import "colors"
+
+
+/* DROP MENU*/
+.navMenu
+ width: auto
+ height: auto
+ position: relative
+ &_item
+  z-index: 500
+  position: absolute
+  top: 0%
+  left: 0
+  height: 84.4vh
+  margin: 0
+  padding: 0
+  background-color: $white
+  border: 1px solid $border-menu
+  border-top: none
+  display: none
+  hr
+   margin: 0 15px 0 15px
+   width: 249px
+   color: $line /*для IE */
+   background-color: $line /*для Firefox, Opera, Safari*/
+   border: 0px none
+   height: 1px /* высота 1px IE, Firefox, Opera, Safari */
+  li
+   list-style: none
+   // display: block
+   width: 100%
+   height: auto
+   &:hover
+    background-color: $nav-hover
+    transition-duration: .5s
+   &:hover .navMenu_item__plumbing
+    // display: block
+    visibility: visible
+   a
+    // display: block
+    width: auto
+    display: flex
+    align-items: center
+    padding: 9px 0px 9px 20px
+    text-decoration: none
+    color: $text
+    &:hover
+     color: $text_hover
+     transition-duration: .5s
+    &:hover .item_next
+     opacity: 1
+    &:hover .item_icon
+     opacity: .49
+    .item_next
+     width: 18px
+     height: 18px
+     margin-left: auto
+     margin-right: 10px
+     opacity: 0
+     transition-duration: .5s
+    .item_icon
+     width: 18px
+     height: 21px
+     margin-right: 15px
+  &__plumbing
+   position: absolute
+   z-index: 10
+   padding: 0
+   margin: 0
+   width: 110%
+   // height: 84.5vh
+   background-color: $white
+   top: 0%
+   left: calc(100% + 1px)
+   border: 1px solid $border-menu
+   border-right: 2px solid $border-menu
+   border-top: none
+   // display: none
+   visibility: hidden
+   li
+    width: 100%
+    &:hover .navMenu_item__mixers
+     // display: block
+     visibility: visible
+    a
+     white-space: nowrap
+     text-align: left
+     text-transform: none
+     color: $text
+  &__mixers
+   position: absolute
+   padding: 0
+   margin: 0
+   width: 110%
+   height: 100%
+   background-color: $white
+   top: 0%
+   left: calc(100% + 2px)
+   border: 1px solid $border-menu
+   border-left: none
+   border-top: none
+   // display: none
+   visibility: hidden
+   li
+    &:hover .navMenu_item__pipes
+     // display: block
+     visibility: visible
+    a
+     display: flex
+     justify-content: flex-start
+  &__pipes
+   padding: 0
+   margin: 0
+   width: auto
+   width: 80%
+   height: 100%
+   background-color: $white
+   position: absolute
+   top: 0%
+   left: 100%
+   border: 1px solid $border-menu
+   border-left: 2px solid $border-menu
+   border-top: none
+   // display: none
+   visibility: hidden
+   li
+    a
+     display: flex
+     justify-content: flex-start
+     width: auto
+       
+
+#menuCatalogSection
+ .catalogButton
+  width: 281px
+
+     
+/* ALPHACATALOG*/
+
+.alphacatalog
+ display: flex
+ &__header
+  display: flex
+  padding: 0
+ .alpha
+  margin-bottom: 30px
+  &__one
+   display: flex
+   justify-content: space-between
+   padding: 0
+   a
+    text-decoration: none
+    font-size: 16px
+    color: $black
+    border-bottom: 1px dashed $white
+    transition-duration: .2s
+    &:hover
+     font-weight: bold
+     transition-duration: .2s
+     border-bottom: 1px dashed $black
+  &__two
+   display: flex
+   justify-content: flex-end
+   padding: 0
+   a
+    font-size: 16px
+    color: $black
+    font-weight: 700
+  &__list
+   padding: 0
+   margin-right: auto
+   &:last-child
+    margin-right: 0
+   h1
+    margin-bottom: 0
+   hr
+    border: none
+    background: $line_two
+    height: 1px
+    margin-bottom: 3px
+   ul
+    padding: 0
+    list-style: none
+    margin-top: 0
+    li
+     a
+      text-decoration: none
+      color: $black
+      &:hover
+       color: $href
+       transition: all .2s
+
+
+
+
+
+
+
+
+@import "media"
+
+    
+
+   
+   
