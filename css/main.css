@@ -7,9 +7,10 @@
 .navMenu_item {
   z-index: 500;
   position: absolute;
-  top: 0%;
+  top: 0;
   left: 0;
   height: 84.4vh;
+  width: 276px;
   margin: 0;
   padding: 0;
   background-color: #fff;
@@ -22,7 +23,7 @@
   width: 249px;
   color: #DDDDDD;
   background-color: #DDDDDD;
-  border: 0px none;
+  border: 0 none;
   height: 1px;
 }
 .navMenu_item li {
@@ -46,7 +47,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 9px 0px 9px 20px;
+  padding: 9px 20px;
   text-decoration: none;
   color: #58595b;
 }
@@ -55,18 +56,12 @@
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
 }
-.navMenu_item li a:hover .item_next {
-  opacity: 1;
-}
-.navMenu_item li a:hover .item_icon {
-  opacity: 0.49;
-}
 .navMenu_item li a .item_next {
+  display: none;
   width: 18px;
   height: 18px;
   margin-left: auto;
-  margin-right: 10px;
-  opacity: 0;
+  margin-right: -10px;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
 }
@@ -74,6 +69,9 @@
   width: 18px;
   height: 21px;
   margin-right: 15px;
+}
+.navMenu_item li a:hover .item_icon {
+    opacity: 0.49;
 }
 .navMenu_item__plumbing {
   position: absolute;
