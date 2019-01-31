@@ -59,15 +59,15 @@ $(function(){
              $list = $container.find(".navMenu_item__plumbing"),
              height = $list.height() * 1.1,       // Снизу должно быть достаточно места
              multiplier = height / maxHeight;     // Для ускорения перемещения, если список очень длинный
-        
+
         // Сохраняем оригинальное значение высоты контейнера, чтобы восстановить его 
         $container.data("origHeight", $container.height());
-        
-        
+
         // Выпадающее меню появляется точно под соответствующим пунктом родительского списка
         $list.show().css({
                 paddingTop: "0px",
             });
+
         // Не делаем никаких анимаций, если список короче максимального значения
         if (multiplier > 1) {
             $list.mousemove(function(e) {
@@ -94,8 +94,23 @@ $(function(){
             .removeClass("hover");
     
     });
-    
 
+    // Отображение "пройденного пути" в меню
+    $('.navMenu li').hover(function () {
+        var $this = $(this);
+            $list = $this.find('ul:first');
+
+        $this.parent().find('.item_next').hide();
+        if (!$list.length) return;
+
+        // Делаем минимальную высоту контейнера равной координате нижней границы пунтка меню
+        $list.css('minHeight', $this.position().top + $this.height());
+
+        $this.find('.item_next:first').show();
+
+    }, function () {
+        $(this).find('.item_next:first').hide();
+    })
 
 	// TABS
 
