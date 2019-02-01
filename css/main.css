@@ -9,7 +9,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 84.4vh;
   width: 276px;
   margin: 0;
   padding: 0;
@@ -133,11 +132,10 @@
   padding: 0;
   margin: 0;
   width: auto;
-  width: 80%;
-  height: 100%;
+  min-width: 276px;
   background-color: #fff;
   position: absolute;
-  top: 0%;
+  top: 0;
   left: 100%;
   border: 1px solid #82c6ff;
   border-left: 2px solid #82c6ff;
