@@ -97,20 +97,50 @@ $(function(){
 
     // Отображение "пройденного пути" в меню
     $('.navMenu li').hover(function () {
-        var $this = $(this);
-            $list = $this.find('ul:first');
+        var $elem = $(this),
+        	$parent = $elem.parent(),
+            $list = $elem.find('ul:first');
 
-        $this.parent().find('.item_next').hide();
+        // Если внутри элемента нет списка - ничего не далем
         if (!$list.length) return;
 
-        // Делаем минимальную высоту контейнера равной координате нижней границы пунтка меню
-        $list.css('minHeight', $this.position().top + $this.height());
+        $elem.find('.item_next:first').show();
 
-        $this.find('.item_next:first').show();
+        // Если высота дочернего списка выше родительского, то проставляем
+		// эту высоту всем предыдущим спискам
+        if ($list.height() > $parent.height()) {
+        	var maxHeight = $list.height();
+
+        	// Запишем значение оригинальной высоты
+        	$parent.data('origHeight', $parent.height());
+
+        	while (!$elem.hasClass('navMenu'))  {
+                if ($elem.is('ul')) $elem.height(maxHeight);
+        		$elem = $elem.parent();
+            }
+        } else {
+            // Иначе делаем минимальную высоту равной высоте родительского списка
+            $list.css('minHeight', $parent.height());
+		}
 
     }, function () {
-        $(this).find('.item_next:first').hide();
-    })
+    	var $elem = $(this),
+			maxHeight = $elem.parent().data('origHeight');
+
+    	$elem.find('.item_next:first').hide();
+
+        // Делаем высоту оставшихся списков равными высоте самого большего оставшегося списка
+    	while (!$elem.hasClass('navMenu'))  {
+            if ($elem.is('ul')) $elem.height(maxHeight);
+            $elem = $elem.parent();
+        }
+    });
+
+
+//show div and trigger custom event in callback when div is visible
+    $('#someDivId').show('slow', function(){
+        $(this).trigger('isVisible');
+    });
 
 	// TABS
 
