@@ -1,28 +1,27 @@
 $(function(){
 
 
-	var btn = $('a.catalogButton');
-	var nav_menu = $('.navMenu_item');
+    var btn = $('a.catalogButton');
+    var nav_menu = $('.catalog_menu');
 
-	btn.on('click',  function(event) {
-		event.preventDefault();
-		nav_menu.slideToggle('fast');
+    btn.on('click', function (event) {
+        event.preventDefault();
+        nav_menu.slideToggle('fast');
 
-			var val = $(window).scrollTop();
-	        if (val > 130) {
-	            $('.navMenu').css({
-	            	top: val +60+"px",
-	            	position: "absolute"
-	            });
-	        } 
-	        else {
-	            $('.navMenu')
-	            .css({
-	            	top: "0",
-	            	position: "relative"
-	            });
-	        }
-	});
+        var val = $(window).scrollTop();
+        if (val > 130) {
+            $('.navMenu').css({
+                top: val + 60 + "px",
+                position: "absolute"
+            });
+        }
+        else {
+            $('.navMenu').css({
+				top: "0",
+				position: "relative"
+			});
+        }
+    });
 
 
 
@@ -52,7 +51,7 @@ $(function(){
 
 // SCROLL MENU
 
-	var maxHeight = $(window).height();	
+	/*var maxHeight = $(window).height();
     $(".navMenu_item > li").hover(function() {
     
          var $container = $(this),
@@ -93,53 +92,59 @@ $(function(){
             .find("a")
             .removeClass("hover");
     
-    });
+    });*/
 
     // Отображение "пройденного пути" в меню
-    $('.navMenu li').hover(function () {
+    $('.catalog_menu li').hover(function () {
         var $elem = $(this),
         	$parent = $elem.parent(),
             $list = $elem.find('ul:first');
 
         // Если внутри элемента нет списка - ничего не далем
         if (!$list.length) return;
-
-        $elem.find('.item_next:first').show();
+        
+        // Показ иконки "стрелочки"
+        var arrow = document.createElement('img');
+        arrow.classList.add('item_next');
+        arrow.setAttribute('src', 'images/icons/right-arrow.svg');
+        $elem.find('a:first').append(arrow);
+        
+        // Показ дочернего списка
+        $list.show();
 
         // Если высота дочернего списка выше родительского, то проставляем
 		// эту высоту всем предыдущим спискам
-        if ($list.height() > $parent.height()) {
+       if ($list.height() > $parent.height()) {
         	var maxHeight = $list.height();
 
         	// Запишем значение оригинальной высоты
         	$parent.data('origHeight', $parent.height());
 
-        	while (!$elem.hasClass('navMenu'))  {
+        	while (!$elem.hasClass('catalog_container'))  {
                 if ($elem.is('ul')) $elem.height(maxHeight);
         		$elem = $elem.parent();
             }
         } else {
             // Иначе делаем минимальную высоту равной высоте родительского списка
-            $list.css('minHeight', $parent.height());
+            $list.css('minHeight', $parent.height() + 4);
 		}
 
     }, function () {
     	var $elem = $(this),
+            $list = $elem.find('ul:first'),
 			maxHeight = $elem.parent().data('origHeight');
+    	
+        if (!$list.length) return;
 
-    	$elem.find('.item_next:first').hide();
+    	// Прячем список и удаляем иконку стрелки
+        $list.hide();
+    	$elem.find('.item_next:first').remove();
 
         // Делаем высоту оставшихся списков равными высоте самого большего оставшегося списка
-    	while (!$elem.hasClass('navMenu'))  {
+    	while (!$elem.hasClass('catalog_container'))  {
             if ($elem.is('ul')) $elem.height(maxHeight);
             $elem = $elem.parent();
         }
-    });
-
-
-//show div and trigger custom event in callback when div is visible
-    $('#someDivId').show('slow', function(){
-        $(this).trigger('isVisible');
     });
 
 	// TABS
