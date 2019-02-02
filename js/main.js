@@ -126,7 +126,7 @@ $(function(){
             }
         } else {
             // Иначе делаем минимальную высоту равной высоте родительского списка
-            $list.css('minHeight', $parent.height() + 4);
+            $list.css('minHeight', $parent.height() + 2);
 		}
 
     }, function () {
