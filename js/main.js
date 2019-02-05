@@ -1,6 +1,4 @@
 $(function(){
-
-
     var btn = $('a.catalogButton');
     var nav_menu = $('.catalog_root');
 
@@ -13,27 +11,33 @@ $(function(){
 
 
 /*FIX DROP_MENU*/
-    $(window).scroll(function () {
+    $(window).scroll(function () {	
     	var val = $(this).scrollTop();
-    	if(val > 130){
-    		$('.catalog_menu')
-    		.css({
-    			top: val + 60+"px",
-    			position: "absolute"
-    		});
-    	}
-        else{
-    	   $('.catalog_menu')
-        	.css({
-        		top: "0"
-        	});
-
+		
+    	if (val > 130) {
+			headerHeight = $('#mainMenuContainer').height();
+			
+			$('.catalog_menu').css({
+				position: 'fixed',
+				top: 60
+			});
+    	} else {
+			headerHeight = $('#foundation').height();
+			
+			$('.catalog_menu').css({
+				position: 'relative',
+				top: 0
+			});
         } 
     });
 
     // Скролл длинного списка меню
     var headerHeight = $('#foundation').height(),
 		windowHeight = $(window).height();
+	
+	$(window).resize(function() {
+		windowHeight = $(window).height();
+	});
 	
 	$('.catalog_menu').on('wheel', function() {
 
@@ -47,19 +51,19 @@ $(function(){
 
         $elem = $elem.find('.catalog_list:first');
 
-        if ($elem.children().last().offset().top < (windowHeight - headerHeight - $(window).scrollTop())) return;
+        if ($elem.height() < (windowHeight - headerHeight - $(window).scrollTop())) return;
 
         var delta = event.deltaY || event.detail || event.wheelDelta,
             move = 0,
 			topEdge = parseInt($elem.css('marginTop')),
 			bottomEdge = headerHeight + $elem.height();
 
-        if (delta > 0 && topEdge >= 0) {
+        if (delta < 0 && topEdge >= 0) {
             move = 0;
-        } else if (delta < 0 && (bottomEdge + topEdge) <= windowHeight) {
-        	move = 	windowHeight - $elem.height() - headerHeight;
+        } else if (delta > 0 && (bottomEdge + topEdge - $(window).scrollTop()) <= windowHeight) {
+        	move = 	windowHeight - $elem.height() - headerHeight + $(window).scrollTop();
         } else {
-        	move = topEdge + (delta / 4);
+        	move = topEdge - (delta / 4);
 		}
 
         $elem.css('marginTop', move);
@@ -83,7 +87,7 @@ $(function(){
         $elem.find('a:first').append(arrow);
 
         // Показ дочернего списка
-        $list.show();
+        $list.css('display', 'block');
 
         // Если высота дочернего списка выше родительского, то проставляем
 		// эту высоту всем предыдущим спискам
@@ -111,7 +115,7 @@ $(function(){
         if (!$list.length) return;
 
     	// Прячем список и удаляем иконку стрелки
-        $list.hide();
+        $list.attr('style', '');
         $list.find('.catalog_list:first').css('marginTop', 0);
     	$elem.find('.item_next:first').remove();
 
