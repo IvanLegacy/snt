@@ -2,25 +2,11 @@ $(function(){
 
 
     var btn = $('a.catalogButton');
-    var nav_menu = $('.catalog_menu');
+    var nav_menu = $('.catalog_root');
 
     btn.on('click', function (event) {
         event.preventDefault();
         nav_menu.slideToggle('fast');
-
-        var val = $(window).scrollTop();
-        if (val > 130) {
-            $('.navMenu').css({
-                top: val + 60 + "px",
-                position: "absolute"
-            });
-        }
-        else {
-            $('.navMenu').css({
-				top: "0",
-				position: "relative"
-			});
-        }
     });
 
 
@@ -30,119 +16,109 @@ $(function(){
     $(window).scroll(function () {
     	var val = $(this).scrollTop();
     	if(val > 130){
-    		$('.navMenu')
+    		$('.catalog_menu')
     		.css({
     			top: val + 60+"px",
     			position: "absolute"
     		});
     	}
         else{
-    	   $('.navMenu')
+    	   $('.catalog_menu')
         	.css({
-        		top: "0",
-        		position: "relative"
+        		top: "0"
         	});
 
         } 
     });
-    
 
+    // Скролл длинного списка меню
+    var headerHeight = $('#foundation').height(),
+		windowHeight = $(window).height();
+	
+	$('.catalog_menu').on('wheel', function() {
 
+        event.preventDefault();
 
-// SCROLL MENU
+        var $elem = $(event.target);
 
-	/*var maxHeight = $(window).height();
-    $(".navMenu_item > li").hover(function() {
-    
-         var $container = $(this),
-             $list = $container.find(".navMenu_item__plumbing"),
-             height = $list.height() * 1.1,       // Снизу должно быть достаточно места
-             multiplier = height / maxHeight;     // Для ускорения перемещения, если список очень длинный
-
-        // Сохраняем оригинальное значение высоты контейнера, чтобы восстановить его 
-        $container.data("origHeight", $container.height());
-
-        // Выпадающее меню появляется точно под соответствующим пунктом родительского списка
-        $list.show().css({
-                paddingTop: "0px",
-            });
-
-        // Не делаем никаких анимаций, если список короче максимального значения
-        if (multiplier > 1) {
-            $list.mousemove(function(e) {
-                    var offset = $container.offset();
-                    var relativeY = ((e.pageY - offset.top) * multiplier) - ($container.data("origHeight") * multiplier);
-                    if (relativeY > $container.data("origHeight")) {
-                        $list.css("top", -relativeY + $container.data("origHeight"));
-                    };
-                });
+        while (!$elem.is('div')) {
+            $elem = $elem.parent();
         }
-        
-    }, function() {
-    
-        var $el = $(this);
-        
-        // Устанавливаем оригинальные настройки
-        $el
-            .height($(this).data("origHeight"))
-            .find(".navMenu_item__plumbing")
-            .css({ top: 0 })
-            .hide()
-            .end()
-            .find("a")
-            .removeClass("hover");
-    
-    });*/
+
+        $elem = $elem.find('.catalog_list:first');
+
+        if ($elem.children().last().offset().top < (windowHeight - headerHeight - $(window).scrollTop())) return;
+
+        var delta = event.deltaY || event.detail || event.wheelDelta,
+            move = 0,
+			topEdge = parseInt($elem.css('marginTop')),
+			bottomEdge = headerHeight + $elem.height();
+
+        if (delta > 0 && topEdge >= 0) {
+            move = 0;
+        } else if (delta < 0 && (bottomEdge + topEdge) <= windowHeight) {
+        	move = 	windowHeight - $elem.height() - headerHeight;
+        } else {
+        	move = topEdge + (delta / 4);
+		}
+
+        $elem.css('marginTop', move);
+	});
+	
 
     // Отображение "пройденного пути" в меню
     $('.catalog_menu li').hover(function () {
         var $elem = $(this),
-        	$parent = $elem.parent(),
-            $list = $elem.find('ul:first');
+			$parent = $elem.closest('.catalog_wrapper');
+            $list = $elem.find('.catalog_wrapper:first');
 
         // Если внутри элемента нет списка - ничего не далем
         if (!$list.length) return;
         
         // Показ иконки "стрелочки"
         var arrow = document.createElement('img');
+
         arrow.classList.add('item_next');
         arrow.setAttribute('src', 'images/icons/right-arrow.svg');
         $elem.find('a:first').append(arrow);
-        
+
         // Показ дочернего списка
         $list.show();
 
         // Если высота дочернего списка выше родительского, то проставляем
 		// эту высоту всем предыдущим спискам
        if ($list.height() > $parent.height()) {
-        	var maxHeight = $list.height();
+        	var height = $list.height();
 
-        	// Запишем значение оригинальной высоты
-        	$parent.data('origHeight', $parent.height());
+           // Запишем значение оригинальной высоты
+           $parent.data('origHeight', $parent.height());
 
-        	while (!$elem.hasClass('catalog_container'))  {
-                if ($elem.is('ul')) $elem.height(maxHeight);
+        	while (!$elem.hasClass('catalog_menu'))  {
+                if ($elem.is('.catalog_wrapper')) $elem.height(height);
         		$elem = $elem.parent();
             }
         } else {
             // Иначе делаем минимальную высоту равной высоте родительского списка
-            $list.css('minHeight', $parent.height() + 2);
+            $list.css('minHeight', $parent.height());
 		}
+		return false;
 
     }, function () {
     	var $elem = $(this),
-            $list = $elem.find('ul:first'),
-			maxHeight = $elem.parent().data('origHeight');
+            $list = $elem.find('.catalog_wrapper:first'),
+			height = $elem.closest('.catalog_wrapper').data('origHeight');
     	
         if (!$list.length) return;
 
     	// Прячем список и удаляем иконку стрелки
         $list.hide();
+        $list.find('.catalog_list:first').css('marginTop', 0);
     	$elem.find('.item_next:first').remove();
 
+
         // Делаем высоту оставшихся списков равными высоте самого большего оставшегося списка
-    	while (!$elem.hasClass('catalog_container'))  {
-            if ($elem.is('ul')) $elem.height(maxHeight);
+    	while (!$elem.hasClass('catalog_menu'))  {
+            if ($elem.is('.catalog_wrapper')) $elem.height(height);
             $elem = $elem.parent();
         }
     });
