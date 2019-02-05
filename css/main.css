@@ -1,32 +1,37 @@
 /* DROP MENU */
 
 .catalog_container {
-
+  position: relative;
 }
 
 .catalog_container * {
   box-sizing: border-box;
 }
 
-.catalog_container ul {
+.catalog_wrapper {
   display: none;
   position: absolute;
-  list-style: none;
-  width: 280px;
-  padding: 0;
-  margin: 0;
+  top: 0;
+  left: 100%;
   border: 2px solid #82c6ff;
   border-top: 0;
   background-color: white;
 }
 
-.catalog_menu {
-  height: 500px;
+.catalog_root {
+  left: 0;
 }
 
 .catalog_list {
-  top: 0;
-  left: 100%;
+  list-style: none;
+  width: 280px;
+  padding: 0;
+  margin: 0;
+}
+
+.catalog_menu {
+  position: relative;
+  z-index: 100;
 }
 
 .catalog_menu li:hover {
@@ -50,16 +55,12 @@
   padding-left: 20px;
 }
 
-.catalog_menu img {
+.catalog_menu .item_icon,
+.catalog_menu .item_next {
   position: absolute;
   top: 50%;
   margin-top: -8px;
   width: 15px;
-  height: 15px;
-}
-
-.catalog_menu hr {
-    margin: 0;
 }
 
 .catalog_menu .item_icon {
@@ -68,6 +69,18 @@
 
 .catalog_menu .item_next {
   right: 10px;
+}
+
+.catalog_menu .item_down {
+  transform: rotate(90deg);
+  position: fixed;
+  bottom: 10px;
+  margin-left: -15px;
+  width: 30px;
+}
+
+.catalog_menu hr {
+  margin: 0;
 }
 
 #menuCatalogSection .catalogButton {
