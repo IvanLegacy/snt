@@ -4,6 +4,7 @@ $(function(){
 
     btn.on('click', function (event) {
         event.preventDefault();
+        nav_menu.height(windowHeight - headerHeight + $(window).scrollTop());
         nav_menu.slideToggle('fast');
     });
 
@@ -13,7 +14,7 @@ $(function(){
 /*FIX DROP_MENU*/
     $(window).scroll(function () {	
     	var val = $(this).scrollTop();
-		
+		nav_menu.height(windowHeight - headerHeight + $(window).scrollTop());
     	if (val > 130) {
 			headerHeight = $('#mainMenuContainer').height();
 			
@@ -33,10 +34,10 @@ $(function(){
 
     // Скролл длинного списка меню
     var headerHeight = $('#foundation').height(),
-		windowHeight = $(window).height();
+		windowHeight = $(window).height() - 2;
 	
 	$(window).resize(function() {
-		windowHeight = $(window).height();
+		windowHeight = $(window).height() - 2;
 	});
 	
 	$('.catalog_menu').on('wheel', function() {
