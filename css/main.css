@@ -1,86 +1,85 @@
-/* DROP MENU */
-
-.catalog_container {
-  position: relative;
-}
-
-.catalog_container * {
+.catalog-menu * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-.catalog_wrapper {
+.catalog-menu {
+  display: none;
+  position: relative;
+  max-width: 1480px;
+  min-width: 320px;
+  margin: auto;
+  height: calc(100vh - 192px);
+  min-height: 280px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.catalog-menu .catalog-wrapper {
   display: none;
   position: absolute;
-  top: 0;
   left: 100%;
+  width: 280px;
   border: 2px solid #82c6ff;
   border-top: 0;
   background-color: white;
 }
 
-.catalog_root {
+.catalog-menu .catalog-wrapper.catalog-root {
+  display: block;
   left: 0;
+  height: 100%;
 }
 
-.catalog_list {
+.catalog-menu .catalog-wrapper ul {
   list-style: none;
-  width: 280px;
-  padding: 0;
-  margin: 0;
 }
 
-.catalog_menu {
-  position: relative;
-  z-index: 100;
-}
-
-.catalog_menu li:hover {
+.catalog-menu .catalog-wrapper ul li:hover {
   background-color: #edf6fe;
 }
 
-.catalog_menu a {
-  display: block;
-  position: relative;
-  color: black;
-  text-decoration: none;
-  padding: 10px 25px;
+.catalog-menu .catalog-root ul a {
+  padding: 0 45px ;
 }
 
-.catalog_menu a:hover {
+.catalog-menu .catalog-root ul ul a {
+  padding: 0 30px;
+}
+
+.catalog-menu .catalog-wrapper a {
+  position: relative;
+  display: table-cell;
+  width: 280px;
+  height: 50px;
+  vertical-align: middle;
+  color: black;
+  text-decoration: none;
+  padding: 0 30px;
+}
+
+.catalog-menu .catalog-wrapper a:hover {
   color: #909396;
 }
 
-.catalog_menu span{
-  display: block;
-  padding-left: 20px;
+.catalog-menu .catalog-wrapper hr {
+  margin: 0;
 }
 
-.catalog_menu .item_icon,
-.catalog_menu .item_next {
+.catalog-menu .catalog-wrapper .item_icon,
+.catalog-menu .catalog-wrapper .arrow_right {
   position: absolute;
-  top: 50%;
-  margin-top: -8px;
+  top: calc(50% - 8px);
   width: 15px;
 }
 
-.catalog_menu .item_icon {
-  left: 10px;
+.catalog-menu .catalog-wrapper .item_icon {
+  left: 15px;
 }
 
-.catalog_menu .item_next {
+.catalog-menu .catalog-wrapper .arrow_right {
   right: 10px;
-}
-
-.catalog_menu .item_down {
-  transform: rotate(90deg);
-  position: fixed;
-  bottom: 10px;
-  margin-left: -15px;
-  width: 30px;
-}
-
-.catalog_menu hr {
-  margin: 0;
 }
 
 #menuCatalogSection .catalogButton {
